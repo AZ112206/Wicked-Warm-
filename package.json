@@ -1,0 +1,21 @@
+{
+  "name": "wicked-warm",
+  "version": "1.0.0",
+  "description": "Wicked Warm - a Gemini 2.0 Flash chatbot assistant",
+  "type": "module",
+  "main": "src/chatbot.js",
+  "scripts": {
+    "start": "node src/chatbot.js",
+    "ask": "node src/ask.js"
+  },
+  "keywords": [
+    "gemini",
+    "chatbot",
+    "ai"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@google/genai": "^2.31.0",
+    "dotenv": "^18.0.9"
+  }
+}
