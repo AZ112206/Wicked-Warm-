@@ -1,0 +1,39 @@
+# ---- Secrets / environment ----
+# Never commit real credentials. Only .env.example (placeholders) is committed.
+.env
+*.env
+.env.*
+!.env.example
+API's.env
+
+# ---- Node ----
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# ---- Tooling / OS ----
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+.DS_Store
+Thumbs.db
+
+# ---- Editor ----
+.vscode/
+.idea/
