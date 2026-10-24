@@ -1,0 +1,182 @@
+/* Wicked Warm - shared styles (branding, palette, nav, footer, layout)
+   Loaded by every page so the look stays consistent. */
+
+:root {
+  /* Warm brand palette */
+  --ww-flame: #ff6b35;
+  --ww-ember: #f7571f;
+  --ww-amber: #ffb020;
+  --ww-deep: #b3310a;
+  --ww-maroon: #7a1f08;
+
+  /* Neutrals */
+  --ww-ink: #241b16;
+  --ww-slate: #5c5048;
+  --ww-cloud: #fff8f1;
+  --ww-sand: #ffeede;
+  --ww-card: #ffffff;
+  --ww-line: #f0d9c6;
+
+  /* Signals */
+  --ww-up: #d93025;     /* bill rising = bad */
+  --ww-down: #1e8e3e;   /* bill falling = good */
+
+  --ww-shadow: 0 10px 30px rgba(122, 31, 8, 0.12);
+  --ww-radius: 16px;
+  --ww-max: 1140px;
+  --ww-font: "Segoe UI", system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: var(--ww-font);
+  color: var(--ww-ink);
+  background: var(--ww-cloud);
+  line-height: 1.55;
+}
+
+h1, h2, h3 { line-height: 1.2; margin: 0 0 0.5em; }
+
+a { color: var(--ww-deep); }
+
+.ww-container {
+  width: 100%;
+  max-width: var(--ww-max);
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ---- Nav ---- */
+.ww-nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(255, 248, 241, 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--ww-line);
+}
+.ww-nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  height: 66px;
+}
+.ww-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  font-size: 1.2rem;
+  letter-spacing: -0.3px;
+  color: var(--ww-maroon);
+  text-decoration: none;
+}
+.ww-brand__mark {
+  width: 30px; height: 30px;
+  display: grid; place-items: center;
+  border-radius: 9px;
+  background: linear-gradient(135deg, var(--ww-amber), var(--ww-ember));
+  font-size: 1rem;
+}
+.ww-nav__links {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  list-style: none;
+  margin: 0; padding: 0;
+}
+.ww-nav__links a {
+  display: inline-block;
+  padding: 8px 14px;
+  border-radius: 999px;
+  text-decoration: none;
+  color: var(--ww-slate);
+  font-weight: 600;
+}
+.ww-nav__links a:hover { color: var(--ww-deep); background: var(--ww-sand); }
+.ww-nav__links a.is-active { color: #fff; background: var(--ww-ember); }
+
+/* ---- Buttons ---- */
+.ww-btn {
+  display: inline-block;
+  padding: 12px 22px;
+  border: none;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.08s ease, box-shadow 0.2s ease;
+}
+.ww-btn--primary {
+  color: #fff;
+  background: linear-gradient(135deg, var(--ww-ember), var(--ww-deep));
+  box-shadow: var(--ww-shadow);
+}
+.ww-btn--primary:hover { transform: translateY(-1px); }
+.ww-btn--ghost {
+  color: var(--ww-deep);
+  background: transparent;
+  border: 2px solid var(--ww-line);
+}
+
+/* ---- Section helpers ---- */
+.ww-section { padding: 72px 0; }
+.ww-section--tint { background: var(--ww-sand); }
+.ww-eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--ww-ember);
+  margin-bottom: 10px;
+}
+.ww-section__title { font-size: clamp(1.6rem, 3vw, 2.2rem); }
+.ww-section__lead { color: var(--ww-slate); max-width: 640px; }
+
+/* ---- Cards / grids ---- */
+.ww-grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+}
+.ww-card {
+  background: var(--ww-card);
+  border: 1px solid var(--ww-line);
+  border-radius: var(--ww-radius);
+  padding: 22px;
+  box-shadow: var(--ww-shadow);
+}
+.ww-card__icon { font-size: 1.8rem; }
+
+/* ---- Footer ---- */
+.ww-footer {
+  background: var(--ww-maroon);
+  color: #ffd9c2;
+  padding: 36px 0;
+  margin-top: 40px;
+}
+.ww-footer a { color: #ffd9c2; }
+.ww-footer__inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* ---- Utilities ---- */
+.is-hidden { display: none !important; }
+.trend-up { color: var(--ww-up); font-weight: 800; }
+.trend-down { color: var(--ww-down); font-weight: 800; }
+
+@media (max-width: 640px) {
+  .ww-nav__links a { padding: 7px 10px; }
+  .ww-brand span.ww-brand__full { display: none; }
+  .ww-section { padding: 52px 0; }
+}

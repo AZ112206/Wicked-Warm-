@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Price Tracker — Wicked Warm</title>
+  <meta name="description" content="Track energy price trends over time and compare regions. Powered by Wicked Warm's data." />
+  <link rel="stylesheet" href="../shared/shared.css" />
+  <link rel="stylesheet" href="price-tracker.css" />
+</head>
+<body>
+  <!-- ===== Nav ===== -->
+  <header class="ww-nav">
+    <div class="ww-container ww-nav__inner">
+      <a class="ww-brand" href="../home/index.html">
+        <span class="ww-brand__mark">🔥</span>
+        <span class="ww-brand__full">Wicked Warm</span>
+      </a>
+      <nav>
+        <ul class="ww-nav__links">
+          <li><a href="../home/index.html">Home</a></li>
+          <li><a href="../about/about.html">About</a></li>
+          <li><a href="../price-tracker/price-tracker.html" class="is-active">Price Tracker</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="ww-section">
+      <div class="ww-container">
+        <p class="ww-eyebrow">Price tracker</p>
+        <h1 class="ww-section__title">Energy price trends</h1>
+        <p class="ww-section__lead">
+          Track how average energy prices are moving over time and compare across regions.
+          Figures below are sample data for the template.
+        </p>
+
+        <!-- Summary stats -->
+        <div class="ww-pt__summary">
+          <div class="ww-card ww-pt__stat">
+            <p class="label">Current avg. rate</p>
+            <p id="pt-current" class="value">—</p>
+            <p id="pt-current-trend" class="ww-predcard__note">—</p>
+          </div>
+          <div class="ww-card ww-pt__stat">
+            <p class="label">12-month high</p>
+            <p id="pt-high" class="value">—</p>
+          </div>
+          <div class="ww-card ww-pt__stat">
+            <p class="label">12-month low</p>
+            <p id="pt-low" class="value">—</p>
+          </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="ww-pt__controls">
+          <select id="pt-metric">
+            <option value="electricity">Electricity (¢/kWh)</option>
+            <option value="gas">Natural gas ($/therm)</option>
+          </select>
+          <select id="pt-range">
+            <option value="12">Last 12 months</option>
+            <option value="6">Last 6 months</option>
+          </select>
+        </div>
+
+        <!-- Trend chart -->
+        <div id="pt-chart" class="ww-pt__chart" aria-label="Energy price trend chart"></div>
+      </div>
+    </section>
+
+    <!-- Regional comparison -->
+    <section class="ww-section ww-section--tint">
+      <div class="ww-container">
+        <p class="ww-eyebrow">By region</p>
+        <h2 class="ww-section__title">Regional comparison</h2>
+        <table class="ww-pt__table">
+          <thead>
+            <tr><th>Region</th><th>Avg. rate</th><th>Change vs. last month</th></tr>
+          </thead>
+          <tbody id="pt-regions"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="ww-footer">
+    <div class="ww-container ww-footer__inner">
+      <span>🔥 Wicked Warm — energy bill forecasting</span>
+      <span>Hackathon project · Front-end template</span>
+    </div>
+  </footer>
+
+  <script src="price-tracker.js"></script>
+</body>
+</html>

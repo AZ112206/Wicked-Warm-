@@ -1,0 +1,143 @@
+/* Wicked Warm - home page specific styles */
+
+/* ---- Hero ---- */
+.ww-hero {
+  background:
+    radial-gradient(1000px 400px at 80% -10%, rgba(255, 176, 32, 0.25), transparent 60%),
+    linear-gradient(180deg, var(--ww-cloud), var(--ww-sand));
+  padding: 72px 0 80px;
+}
+.ww-hero__inner {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 40px;
+  align-items: center;
+}
+.ww-hero h1 { font-size: clamp(2rem, 4.5vw, 3.2rem); }
+.ww-hl {
+  background: linear-gradient(120deg, var(--ww-ember), var(--ww-amber));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.ww-hero__lead { font-size: 1.1rem; color: var(--ww-slate); max-width: 520px; }
+.ww-hero__actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
+
+/* Hero prediction teaser card */
+.ww-predcard {
+  background: var(--ww-card);
+  border: 1px solid var(--ww-line);
+  border-radius: var(--ww-radius);
+  padding: 24px;
+  box-shadow: var(--ww-shadow);
+}
+.ww-predcard__label { margin: 0; color: var(--ww-slate); font-size: 0.85rem; }
+.ww-predcard__amount { font-size: 2.6rem; font-weight: 800; margin: 4px 0; color: var(--ww-ink); }
+.ww-predcard__amount span { font-size: 1.4rem; color: var(--ww-slate); }
+.ww-predcard__trend { margin: 0 0 14px; }
+.ww-predcard__note { margin: 10px 0 0; font-size: 0.78rem; color: var(--ww-slate); }
+.ww-predcard__bars {
+  display: flex; align-items: flex-end; gap: 8px; height: 90px;
+}
+.ww-predcard__bars span {
+  flex: 1;
+  background: linear-gradient(180deg, var(--ww-amber), var(--ww-ember));
+  border-radius: 6px 6px 0 0;
+  opacity: 0.85;
+}
+.ww-predcard__bars span.is-peak { background: linear-gradient(180deg, var(--ww-ember), var(--ww-deep)); opacity: 1; }
+
+/* ---- Steps ---- */
+.ww-steps {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  margin-top: 28px;
+}
+
+/* ---- Form ---- */
+.ww-form {
+  margin-top: 28px;
+  max-width: 760px;
+  background: var(--ww-card);
+  border: 1px solid var(--ww-line);
+  border-radius: var(--ww-radius);
+  padding: 26px;
+  box-shadow: var(--ww-shadow);
+}
+.ww-form__row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.ww-form label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--ww-ink);
+  margin-bottom: 16px;
+}
+.ww-form input,
+.ww-form select {
+  width: 100%;
+  margin-top: 6px;
+  padding: 11px 12px;
+  border: 1px solid var(--ww-line);
+  border-radius: 10px;
+  font: inherit;
+  background: var(--ww-cloud);
+}
+.ww-form input:focus,
+.ww-form select:focus { outline: 2px solid var(--ww-amber); border-color: var(--ww-amber); }
+.ww-form__file { display: block; }
+.ww-filelist { list-style: none; padding: 0; margin: 4px 0 14px; display: flex; flex-wrap: wrap; gap: 8px; }
+.ww-filelist li {
+  background: var(--ww-sand); color: var(--ww-deep);
+  padding: 5px 10px; border-radius: 999px; font-size: 0.82rem;
+}
+.ww-form__error {
+  color: var(--ww-up); font-weight: 600; margin: 0 0 14px;
+}
+
+/* ---- Dashboard / chart ---- */
+.ww-dashboard {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: 20px;
+  margin-top: 28px;
+}
+.ww-dash__headline .ww-predcard__amount { font-size: 2.8rem; }
+.ww-chart {
+  display: flex; align-items: flex-end; gap: 10px;
+  height: 180px; margin-top: 16px;
+}
+.ww-chart .bar {
+  flex: 1;
+  display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
+  gap: 6px; height: 100%;
+}
+.ww-chart .bar > span.fill {
+  width: 100%;
+  background: linear-gradient(180deg, var(--ww-amber), var(--ww-ember));
+  border-radius: 6px 6px 0 0;
+  transition: height 0.5s ease;
+}
+.ww-chart .bar.is-peak > span.fill { background: linear-gradient(180deg, var(--ww-ember), var(--ww-deep)); }
+.ww-chart .bar > small { color: var(--ww-slate); font-size: 0.72rem; }
+
+/* ---- Recommendations ---- */
+.ww-reclist { list-style: none; padding: 0; margin: 22px 0 0; display: grid; gap: 14px; }
+.ww-reclist li {
+  background: var(--ww-card);
+  border: 1px solid var(--ww-line);
+  border-left: 5px solid var(--ww-ember);
+  border-radius: 12px;
+  padding: 16px 18px;
+  box-shadow: var(--ww-shadow);
+}
+.ww-reclist li strong { display: block; margin-bottom: 4px; color: var(--ww-deep); }
+
+/* ---- Responsive ---- */
+@media (max-width: 860px) {
+  .ww-hero__inner { grid-template-columns: 1fr; }
+  .ww-dashboard { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .ww-form__row { grid-template-columns: 1fr; }
+}

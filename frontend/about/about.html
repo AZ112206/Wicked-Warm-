@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — Wicked Warm</title>
+  <meta name="description" content="How Wicked Warm works: a full-stack energy bill prediction app that blends your usage with weather and climate data and an AI action plan." />
+  <link rel="stylesheet" href="../shared/shared.css" />
+  <link rel="stylesheet" href="about.css" />
+</head>
+<body>
+  <!-- ===== Nav ===== -->
+  <header class="ww-nav">
+    <div class="ww-container ww-nav__inner">
+      <a class="ww-brand" href="../home/index.html">
+        <span class="ww-brand__mark">🔥</span>
+        <span class="ww-brand__full">Wicked Warm</span>
+      </a>
+      <nav>
+        <ul class="ww-nav__links">
+          <li><a href="../home/index.html">Home</a></li>
+          <li><a href="../about/about.html" class="is-active">About</a></li>
+          <li><a href="../price-tracker/price-tracker.html">Price Tracker</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- ===== Intro ===== -->
+    <section class="ww-section">
+      <div class="ww-container">
+        <p class="ww-eyebrow">About the project</p>
+        <h1 class="ww-section__title">A full-stack forecast for your energy bill</h1>
+        <p class="ww-section__lead">
+          Wicked Warm helps homeowners see a reliable estimate of next month's energy
+          bill before it arrives — and what to do when it's trending up. It's built as a
+          full-stack application: a browser front end, a backend that runs the prediction,
+          and an AI layer that turns the forecast into a plain-language action plan.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===== The problem / mission ===== -->
+    <section class="ww-section ww-section--tint">
+      <div class="ww-container ww-about__split">
+        <div>
+          <p class="ww-eyebrow">The problem</p>
+          <h2 class="ww-section__title">Bills arrive too late to act on</h2>
+          <p class="ww-section__lead">
+            By the time the bill shows up, the month is already spent. Families are left
+            reacting instead of planning. Wicked Warm flips that: it forecasts the bill in
+            advance and updates daily, so there's time to make small changes that add up.
+          </p>
+        </div>
+        <div class="ww-card ww-about__stat">
+          <p class="ww-predcard__label">Monthly projection for the upcoming bill</p>
+          <p id="about-amount" class="ww-predcard__amount">$—</p>
+          <p id="about-trend" class="ww-predcard__note">—</p>
+          <p class="ww-predcard__note">Sample forecast — live demo.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Looking ahead (future prediction + slider) ===== -->
+    <section class="ww-section">
+      <div class="ww-container ww-about__split">
+        <div>
+          <p class="ww-eyebrow">Looking ahead</p>
+          <h2 class="ww-section__title">Predict the bills ahead of you</h2>
+          <p class="ww-section__lead">
+            Wicked Warm projects your bills into the future based on your past usage and
+            past bills, weather patterns and seasons, broader climate cycles, and your own
+            personal decisions at home. Slide to choose how far ahead to look.
+          </p>
+        </div>
+
+        <div class="ww-card ww-future">
+          <p class="ww-predcard__label">Projected bill · <span id="future-horizon">6 months</span> ahead</p>
+          <p id="future-amount" class="ww-predcard__amount">$—</p>
+          <p id="future-trend" class="ww-predcard__note">—</p>
+
+          <div id="future-chart" class="ww-future__chart" aria-hidden="true"></div>
+
+          <input id="future-slider" class="ww-future__slider" type="range"
+                 min="0" max="5" step="1" value="3" aria-label="Forecast horizon" />
+          <div class="ww-future__ticks" aria-hidden="true">
+            <span>0mo</span><span>1mo</span><span>3mo</span><span>6mo</span><span>1yr</span><span>5yr</span>
+          </div>
+
+          <p class="ww-predcard__note">Sample forecast — live demo.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== How the stack works ===== -->
+    <section class="ww-section ww-section--tint">
+      <div class="ww-container">
+        <p class="ww-eyebrow">How the stack works</p>
+        <h2 class="ww-section__title">Front end · backend · AI</h2>
+        <div class="ww-grid" style="margin-top:28px;">
+          <div class="ww-card">
+            <div class="ww-card__icon">🖥️</div>
+            <h3>Front end</h3>
+            <p>The pages you're using now — home, about, and the price tracker — built with plain HTML, CSS, and JavaScript.</p>
+          </div>
+          <div class="ww-card">
+            <div class="ww-card__icon">⚙️</div>
+            <h3>Backend</h3>
+            <p>Takes your inputs and usage history, pulls weather and climate signals, and runs the model that forecasts your bill.</p>
+          </div>
+          <div class="ww-card">
+            <div class="ww-card__icon">🤖</div>
+            <h3>AI action plan</h3>
+            <p>Turns the forecast into specific, tailored recommendations when your bill is predicted to rise.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== What goes into a prediction ===== -->
+    <section class="ww-section">
+      <div class="ww-container">
+        <p class="ww-eyebrow">Inside a prediction</p>
+        <h2 class="ww-section__title">What the model weighs</h2>
+        <div class="ww-grid" style="margin-top:28px;">
+          <div class="ww-card"><div class="ww-card__icon">📊</div><h3>Your history</h3><p>Up to five years of your usage and billing patterns.</p></div>
+          <div class="ww-card"><div class="ww-card__icon">🌡️</div><h3>Weather</h3><p>Past and forecasted temperatures driving heating and cooling.</p></div>
+          <div class="ww-card"><div class="ww-card__icon">🌊</div><h3>Climate cycles</h3><p>Seasonal patterns like El Niño and La Niña.</p></div>
+          <div class="ww-card"><div class="ww-card__icon">🏠</div><h3>Your home</h3><p>Location, household size, and home type.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CTA ===== -->
+    <section class="ww-section">
+      <div class="ww-container ww-about__cta">
+        <h2 class="ww-section__title">Ready to see your forecast?</h2>
+        <a href="../home/index.html#get-prediction" class="ww-btn ww-btn--primary">Get my prediction</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="ww-footer">
+    <div class="ww-container ww-footer__inner">
+      <span>🔥 Wicked Warm — energy bill forecasting</span>
+      <span>Hackathon project · Front-end template</span>
+    </div>
+  </footer>
+
+  <script src="about.js"></script>
+</body>
+</html>

@@ -67,14 +67,47 @@ node src/ask.js "What should I wear when it's wicked warm outside?"
   `AIza`). `AQ.` OAuth tokens from the Cloud Console are not accepted by this endpoint.
 - **`Missing GEMINI_API_KEY`**: you haven't created `.env` or left the placeholder value in it.
 
+## Front end
+
+A static multi-page site (plain HTML/CSS/JS, no build step) under `frontend/`.
+Open `frontend/home/index.html` in a browser, or serve the folder:
+
+```bash
+npx serve frontend        # then visit the printed URL
+```
+
+Pages:
+- **Home** (`home/index.html`) — hero, how it works, and a gated flow: enter your
+  home info + a utility bill, generate a forecast, then see the AI action plan.
+- **About** (`about/about.html`) — what the full-stack app does and how it works.
+- **Price Tracker** (`price-tracker/price-tracker.html`) — energy price trends and
+  a regional comparison.
+
+All dynamic data is mock, served by stub functions marked `// TODO: replace with
+backend API call` so the backend can be wired in later without restructuring.
+
 ## Project structure
 
 ```
 .
-├── src/
+├── frontend/
+│   ├── shared/shared.css        # palette, nav, footer (shared by all pages)
+│   ├── home/
+│   │   ├── index.html           # Home page (gated prediction flow)
+│   │   ├── home.css
+│   │   └── home.js
+│   ├── about/
+│   │   ├── about.html
+│   │   └── about.css
+│   └── price-tracker/
+│       ├── price-tracker.html
+│       ├── price-tracker.css
+│       └── price-tracker.js
+├── src/                         # Gemini chatbot (separate workstream)
 │   ├── chatbot.js  # Multi-turn chat loop (npm start)
 │   ├── ask.js      # Single-shot prompt helper (node src/ask.js "...")
 │   └── config.js   # Loads & validates env config
+├── Back End/                    # (empty — backend to come)
 ├── .env.example    # Template (committed)
 ├── .env            # Real secrets (gitignored)
 ├── .gitignore

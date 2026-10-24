@@ -1,0 +1,40 @@
+/* Wicked Warm - price tracker page specific styles */
+
+.ww-pt__summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 18px;
+  margin-top: 24px;
+}
+.ww-pt__stat .label { color: var(--ww-slate); font-size: 0.85rem; margin: 0; }
+.ww-pt__stat .value { font-size: 1.9rem; font-weight: 800; margin: 4px 0; }
+
+/* Controls */
+.ww-pt__controls { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+.ww-pt__controls select {
+  padding: 10px 12px; border: 1px solid var(--ww-line);
+  border-radius: 10px; font: inherit; background: var(--ww-card);
+}
+
+/* Line-ish chart built from bars */
+.ww-pt__chart {
+  display: flex; align-items: flex-end; gap: 6px;
+  height: 240px; margin-top: 24px;
+  padding: 16px; background: var(--ww-card);
+  border: 1px solid var(--ww-line); border-radius: var(--ww-radius);
+  box-shadow: var(--ww-shadow);
+}
+.ww-pt__chart .bar { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 6px; height: 100%; }
+.ww-pt__chart .bar > span.fill {
+  width: 70%;
+  background: linear-gradient(180deg, var(--ww-amber), var(--ww-ember));
+  border-radius: 5px 5px 0 0;
+  transition: height 0.5s ease;
+}
+.ww-pt__chart .bar > small { color: var(--ww-slate); font-size: 0.7rem; }
+
+/* Regional table */
+.ww-pt__table { width: 100%; border-collapse: collapse; margin-top: 16px; background: var(--ww-card); border-radius: var(--ww-radius); overflow: hidden; box-shadow: var(--ww-shadow); }
+.ww-pt__table th, .ww-pt__table td { text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--ww-line); }
+.ww-pt__table th { background: var(--ww-sand); color: var(--ww-deep); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; }
+.ww-pt__table tr:last-child td { border-bottom: none; }

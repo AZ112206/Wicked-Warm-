@@ -1,0 +1,147 @@
+/* Wicked Warm - about page specific styles */
+
+.ww-about__split {
+  display: grid;
+  grid-template-columns: 1.3fr 0.7fr;
+  gap: 32px;
+  align-items: center;
+}
+/* Fixed footprint so the box never resizes as the numbers change. */
+.ww-about__stat {
+  text-align: center;
+  min-height: 260px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+.ww-about__stat .ww-predcard__amount {
+  color: var(--ww-ember);
+  font-size: clamp(3rem, 7vw, 4.4rem);
+  font-weight: 900;
+  letter-spacing: -1.5px;
+  line-height: 1.05;
+  margin: 6px 0;
+  white-space: nowrap;          /* long numbers never wrap */
+}
+.ww-about__stat .ww-predcard__label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+/* Reserve a constant slot for the trend line so short/long text
+   (e.g. "▲ 5% · +$9" vs "▼ 72.9% · −$234.67") can't change the height. */
+.ww-about__stat #about-trend {
+  min-height: 2.6em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+}
+/* ---- Looking-ahead future card ---- */
+.ww-future {
+  /* Fixed footprint so bar count / value changes never resize the card. */
+  min-height: 360px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.ww-future .ww-predcard__amount {
+  color: var(--ww-ember);
+  font-size: clamp(2.4rem, 5vw, 3.2rem);
+  font-weight: 900;
+  letter-spacing: -1px;
+  line-height: 1.05;
+  margin: 4px 0;
+  white-space: nowrap;
+}
+.ww-future #future-trend {
+  min-height: 1.6em;
+  margin: 0 0 8px;
+}
+
+/* Bar chart — same orange look as the home page. */
+.ww-future__chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 5px;
+  height: 150px;
+  margin: 6px 0 18px;
+}
+.ww-future__chart .bar {
+  flex: 1 1 0;
+  min-width: 4px;
+  background: linear-gradient(180deg, var(--ww-amber), var(--ww-ember));
+  border-radius: 5px 5px 0 0;
+  opacity: 0.9;
+  /* Animate height AND width together so sliding grows/shrinks bars smoothly
+     while the chart stays gap-free. */
+  transition: height 0.45s ease, flex-grow 0.45s ease, flex-basis 0.45s ease,
+              min-width 0.45s ease, margin 0.45s ease, opacity 0.45s ease;
+}
+.ww-future__chart .bar.is-peak {
+  background: linear-gradient(180deg, var(--ww-ember), var(--ww-deep));
+  opacity: 1;
+}
+/* Bars beyond the current horizon collapse their height AND width to zero
+   (not display:none) so they ANIMATE out while the remaining bars expand to
+   fill — gap-free during and after the slide. Added bars animate in the same
+   way in reverse. */
+.ww-future__chart .bar.is-inactive {
+  flex-grow: 0;
+  flex-basis: 0;
+  min-width: 0;
+  margin-left: -5px;   /* cancel the chart's 5px gap as it collapses */
+  height: 0% !important;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Range slider in the warm theme. */
+.ww-future__slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--ww-sand);
+  outline: none;
+  margin: 4px 0 6px;
+}
+.ww-future__slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: var(--ww-ember);
+  border: 3px solid #fff;
+  box-shadow: var(--ww-shadow);
+  cursor: pointer;
+}
+.ww-future__slider::-moz-range-thumb {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: var(--ww-ember);
+  border: 3px solid #fff;
+  cursor: pointer;
+}
+.ww-future__ticks {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--ww-slate);
+  margin-bottom: 12px;
+}
+
+.ww-about__cta {
+  text-align: center;
+  background:
+    radial-gradient(600px 220px at 50% 0%, rgba(255, 176, 32, 0.22), transparent 70%);
+  padding: 20px 0 10px;
+}
+.ww-about__cta .ww-section__title { margin-bottom: 20px; }
+
+@media (max-width: 760px) {
+  .ww-about__split { grid-template-columns: 1fr; }
+}

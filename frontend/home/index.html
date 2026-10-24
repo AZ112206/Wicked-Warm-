@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wicked Warm — Know your energy bill before it arrives</title>
+  <meta name="description" content="Wicked Warm predicts your next energy bill before it arrives using your usage, weather and climate patterns, then gives you an AI action plan to keep costs down." />
+  <link rel="stylesheet" href="../shared/shared.css" />
+  <link rel="stylesheet" href="home.css" />
+</head>
+<body>
+  <!-- ===== Nav (shared across pages) ===== -->
+  <header class="ww-nav">
+    <div class="ww-container ww-nav__inner">
+      <a class="ww-brand" href="../home/index.html">
+        <span class="ww-brand__mark">🔥</span>
+        <span class="ww-brand__full">Wicked Warm</span>
+      </a>
+      <nav>
+        <ul class="ww-nav__links">
+          <li><a href="../home/index.html" class="is-active">Home</a></li>
+          <li><a href="../about/about.html">About</a></li>
+          <li><a href="../price-tracker/price-tracker.html">Price Tracker</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- ===== Hero ===== -->
+    <section class="ww-hero">
+      <div class="ww-container ww-hero__inner">
+        <div class="ww-hero__copy">
+          <p class="ww-eyebrow">Energy bill forecasting for homeowners</p>
+          <h1>Know your energy bill <span class="ww-hl">before it arrives</span>.</h1>
+          <p class="ww-hero__lead">
+            Wicked Warm forecasts next month's energy bill by blending your past
+            usage with weather and climate patterns — then hands you an AI action
+            plan to keep costs down when prices are set to spike.
+          </p>
+          <div class="ww-hero__actions">
+            <a href="#get-prediction" class="ww-btn ww-btn--primary">Get my prediction</a>
+            <a href="#how" class="ww-btn ww-btn--ghost">How it works</a>
+          </div>
+        </div>
+
+        <!-- Live demo teaser card — auto-randomizes every 5s (see home.js). -->
+        <aside class="ww-hero__card" aria-hidden="true">
+          <div class="ww-predcard">
+            <p class="ww-predcard__label">Projected — next month</p>
+            <p id="teaser-amount" class="ww-predcard__amount">$182<span>.40</span></p>
+            <p id="teaser-trend" class="ww-predcard__trend trend-up">▲ 12% vs. last month</p>
+            <div id="teaser-bars" class="ww-predcard__bars">
+              <span style="height:40%"></span>
+              <span style="height:55%"></span>
+              <span style="height:48%"></span>
+              <span style="height:70%"></span>
+              <span style="height:62%"></span>
+              <span style="height:88%" class="is-peak"></span>
+            </div>
+            <p class="ww-predcard__note">Sample forecast — live demo</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ===== How it works ===== -->
+    <section id="how" class="ww-section">
+      <div class="ww-container">
+        <p class="ww-eyebrow">How it works</p>
+        <h2 class="ww-section__title">Three steps to your forecast</h2>
+        <div class="ww-steps">
+          <div class="ww-card">
+            <div class="ww-card__icon">🏠</div>
+            <h3>1. Share your home</h3>
+            <p>Tell us your region, household size, and add your recent utility bills.</p>
+          </div>
+          <div class="ww-card">
+            <div class="ww-card__icon">🧠</div>
+            <h3>2. We analyze</h3>
+            <p>We combine your usage with weather and climate trends to model your costs.</p>
+          </div>
+          <div class="ww-card">
+            <div class="ww-card__icon">📈</div>
+            <h3>3. Get your forecast</h3>
+            <p>See next month's predicted bill and a tailored plan to keep it down.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== What we analyze ===== -->
+    <section class="ww-section ww-section--tint">
+      <div class="ww-container">
+        <p class="ww-eyebrow">What we analyze</p>
+        <h2 class="ww-section__title">The signals behind every prediction</h2>
+        <p class="ww-section__lead">Wicked Warm weighs the factors that actually move your bill.</p>
+        <div class="ww-grid" style="margin-top:28px;">
+          <div class="ww-card"><div class="ww-card__icon">🌡️</div><h3>Weather patterns</h3><p>Historical and forecasted temperatures that drive heating and cooling demand.</p></div>
+          <div class="ww-card"><div class="ww-card__icon">🌊</div><h3>Climate cycles</h3><p>Large-scale patterns like El Niño and La Niña that shift seasonal energy use.</p></div>
+          <div class="ww-card"><div class="ww-card__icon">⚠️</div><h3>Natural-disaster risk</h3><p>Regional events that can disrupt supply and push prices up.</p></div>
+          <div class="ww-card"><div class="ww-card__icon">📊</div><h3>Your usage &amp; bills</h3><p>Up to five years of your own consumption and billing history.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Input gate ===== -->
+    <section id="get-prediction" class="ww-section">
+      <div class="ww-container">
+        <p class="ww-eyebrow">Get started</p>
+        <h2 class="ww-section__title">Tell us about your home</h2>
+        <p class="ww-section__lead">Add your details and a recent utility bill to generate a forecast. No account needed.</p>
+
+        <form id="prediction-form" class="ww-form" novalidate>
+          <div class="ww-form__row">
+            <label>Location (city / ZIP)
+              <input type="text" name="location" placeholder="e.g. Boston, MA" required />
+            </label>
+            <label>Household size
+              <input type="number" name="household" min="1" placeholder="e.g. 4" required />
+            </label>
+          </div>
+          <div class="ww-form__row">
+            <label>Home type
+              <select name="homeType">
+                <option value="">Select…</option>
+                <option>Apartment</option>
+                <option>Townhouse</option>
+                <option>Single-family house</option>
+              </select>
+            </label>
+            <label>Monthly income range (optional)
+              <select name="income">
+                <option value="">Prefer not to say</option>
+                <option>Under $3,000</option>
+                <option>$3,000–$6,000</option>
+                <option>Over $6,000</option>
+              </select>
+            </label>
+          </div>
+          <label class="ww-form__file">Upload a recent utility bill (image or PDF)
+            <input type="file" id="bill-files" name="bills" accept="image/*,.pdf" multiple />
+          </label>
+          <ul id="file-list" class="ww-filelist"></ul>
+
+          <p id="form-error" class="ww-form__error is-hidden" role="alert"></p>
+          <button type="submit" class="ww-btn ww-btn--primary">Generate my forecast</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ===== Prediction preview (hidden until submit) ===== -->
+    <section id="prediction" class="ww-section ww-section--tint is-hidden" aria-live="polite">
+      <div class="ww-container">
+        <p class="ww-eyebrow">Your forecast</p>
+        <h2 class="ww-section__title">Next month's predicted bill</h2>
+        <div class="ww-dashboard">
+          <div class="ww-card ww-dash__headline">
+            <p class="ww-predcard__label">Projected total</p>
+            <p id="pred-amount" class="ww-predcard__amount">—</p>
+            <p id="pred-trend" class="ww-predcard__trend">—</p>
+            <p id="pred-sub" class="ww-predcard__note">vs. last month</p>
+          </div>
+          <div class="ww-card ww-dash__chart">
+            <h3>6-month projection</h3>
+            <div id="pred-chart" class="ww-chart"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Recommendations (hidden until a prediction exists) ===== -->
+    <section id="recommendations" class="ww-section is-hidden" aria-live="polite">
+      <div class="ww-container">
+        <p class="ww-eyebrow">Your AI action plan</p>
+        <h2 class="ww-section__title">How to keep your bill down</h2>
+        <p id="rec-intro" class="ww-section__lead"></p>
+        <ul id="rec-list" class="ww-reclist"></ul>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== Footer (shared) ===== -->
+  <footer class="ww-footer">
+    <div class="ww-container ww-footer__inner">
+      <span>🔥 Wicked Warm — energy bill forecasting</span>
+      <span>Hackathon project · Front-end template</span>
+    </div>
+  </footer>
+
+  <script src="home.js"></script>
+</body>
+</html>
