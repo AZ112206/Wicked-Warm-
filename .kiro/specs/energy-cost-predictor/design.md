@@ -528,3 +528,73 @@ The feature's computation core is made of pure functions with large input spaces
 ### Calibration test
 
 - A dedicated property test (Property 10) generates reachable positive actual costs, runs calibration against the placeholder reference provider, and asserts convergence to ≤ 1% relative error within the 100-iteration budget, plus a non-convergence example (target outside reachable bounds) asserting best-error retention (Req 8.5).
+
+
+## Live Data Providers (real-data integration)
+
+The placeholder providers established the Protocol seams; these live providers
+fill them with real data. They live in their own modules and are wired into the
+`Predictor` exactly like the placeholders — no core changes (Req 2.4, 2.5). Both
+use only the standard library (`urllib`) so no HTTP dependency is added, and
+both perform network I/O only behind the provider-adapter boundary (30s timeout
++ field guards still apply).
+
+### OpenMeteoWeatherProvider (weather)
+
+- **Source:** Open-Meteo (https://open-meteo.com) — free, no API key.
+- **Shape:** implements `WeatherProvider.get_temperatures(region_key, start, end)`.
+- **Data:** daily `temperature_2m_mean` in degrees Fahrenheit. Daily granularity
+  is deliberate: monthly averages hide cold snaps the degree-difference model
+  depends on; hourly is unnecessary for an annual estimate.
+- **Endpoint selection:** the historical archive endpoint for past ranges, the
+  forecast endpoint when the range reaches today — so both "typical/historical
+  cost" and "upcoming-season forecast" use cases are covered by one provider.
+- **Region mapping:** `REGION_COORDS` maps a region key to a representative
+  latitude/longitude (`MA` → Boston, 42.3601, -71.0589).
+- **Missing data:** any day the API omits or returns null for is emitted as a
+  `WeatherInterval` with `outdoor_temp_f=None`, preserving the demand model's
+  missing-interval reporting (Req 4.6) rather than silently dropping days.
+
+### EIAPricingProvider (electricity price)
+
+- **Source:** U.S. EIA Open Data APIv2 (https://www.eia.gov/opendata) — free,
+  requires an API key via the `EIA_API_KEY` environment variable (or `api_key=`).
+  The official JSON API is used rather than scraping the EIA dashboard, which is
+  JavaScript-rendered and unsuitable for a plain HTTP client.
+- **Shape:** implements `PricingProvider.get_prices(region_key)`.
+- **Data:** most recent monthly **residential** retail price (cents/kWh) for the
+  region's state, converted to dollars/kWh for the `electricity_per_kwh` key.
+- **All four fuels fetched:** beyond electricity, the provider now also pulls
+  residential **natural gas** (EIA `natural-gas/pri/sum`, $/Mcf converted to
+  $/therm), **heating oil**, and **propane** (EIA `petroleum/pri/wfr`, New
+  England PADD 1A, $/gallon). Each non-electric fuel independently falls back to
+  a configurable constant if its live series is unavailable (heating-oil and
+  propane series are collected weekly only Oct-Mar), and `fetch_other_fuels=False`
+  skips the extra calls. Explicit `extra_prices` override any fetched value.
+- **Seasonal heat-pump rate (optional override):** EIA does not publish the
+  utility-specific Nov 1-Apr 30 heat-pump delivery tariff, so it defaults to a
+  configurable discount off the fetched electricity price. This is intentionally
+  an optional input rather than a hard requirement: calibrating against a real
+  utility bill already absorbs a customer's actual seasonal rate. Supply
+  `electricity_seasonal_per_kwh` via `extra_prices` to pin an exact tariff.
+
+### Real-data status
+
+Closed:
+- **Weather** - live daily temperatures (Open-Meteo).
+- **Electricity price** - live residential $/kWh (EIA).
+- **Natural gas, heating oil, propane** - live residential prices (EIA), with
+  per-fuel fallback to constants when a series is unavailable.
+- **COP curve** - default MA curve now uses NEEP ccASHP-grade values
+  (~1.75 @5F, ~2.1 @17F, ~3.6 @47F) for a representative cold-climate unit.
+
+Remaining (accuracy refinements, not blockers):
+- **Seasonal heat-pump tariff** - a derived discount by default; pin the real
+  tariff via `extra_prices` if needed, though calibration against a real bill
+  absorbs it in practice.
+- **Per-unit COP curve** - the default is a representative unit; a specific
+  installed model's NEEP COPs can replace it for per-model accuracy.
+- **`ua_coefficient`** - the house thermal-loss seed is only grounded by running
+  `Calibration` against a real utility bill; without that step the absolute cost
+  magnitude is an estimate even though the weather-driven shape is real. This is
+  the main remaining accuracy lever and motivates the utility-bill ingestion work.

@@ -77,14 +77,23 @@ MA_FUELS: Mapping[str, FuelDef] = {
 # ---------------------------------------------------------------------------
 #
 # Ascending-temperature breakpoints with COP monotonic non-decreasing as the
-# outdoor temperature rises: performance falls from ~3.5 at 47 F down to ~1.8 at
-# 5 F, which is the expected cold-climate heat-pump behavior (Req 6.2, 6.3).
+# outdoor temperature rises (Req 6.2, 6.3). These default values are drawn from
+# NEEP's Cold Climate Air-Source Heat Pump Product List (neep.org) for a
+# representative, widely deployed cold-climate ductless unit (Hyper-Heating
+# class). NEEP publishes tested COP at the 5 F / 17 F / 47 F rating points, which
+# map directly onto these breakpoints; the 35 F point is interpolated to keep the
+# curve smooth. To model a specific installed unit, replace these with that
+# unit's published NEEP COPs.
+#   5 F  -> ~1.75  (NEEP ccASHP minimum at max-capacity operation)
+#   17 F -> ~2.1
+#   35 F -> ~2.8   (interpolated)
+#   47 F -> ~3.6   (typical rated COP at 47 F)
 MA_COP_CURVE = COPCurve(
     points=(
-        (5.0, 1.8),
-        (17.0, 2.3),
-        (35.0, 3.0),
-        (47.0, 3.5),
+        (5.0, 1.75),
+        (17.0, 2.1),
+        (35.0, 2.8),
+        (47.0, 3.6),
     )
 )
 
