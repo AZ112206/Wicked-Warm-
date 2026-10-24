@@ -1,0 +1,142 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "1.1 Create `energy_cost_predictor/service.py` server skeleton and provider construction": [
+      {
+        "executionId": "c170fe2b-0481-428e-8ca6-3a2d85a0de0e",
+        "chatSessionId": "sess_80792a0a-da8f-410a-9d74-1331b18aa441",
+        "timestamp": 1792877871429
+      },
+      {
+        "executionId": "c170fe2b-0481-428e-8ca6-3a2d85a0de0e",
+        "chatSessionId": "sess_80792a0a-da8f-410a-9d74-1331b18aa441",
+        "timestamp": 1792877878413
+      },
+      {
+        "executionId": "c170fe2b-0481-428e-8ca6-3a2d85a0de0e",
+        "chatSessionId": "sess_80792a0a-da8f-410a-9d74-1331b18aa441",
+        "timestamp": 1792879074597
+      }
+    ],
+    "1.2 Implement the `POST /predict` operation with optional calibration": [
+      {
+        "executionId": "c170fe2b-0481-428e-8ca6-3a2d85a0de0e",
+        "chatSessionId": "sess_80792a0a-da8f-410a-9d74-1331b18aa441",
+        "timestamp": 1792877871503
+      },
+      {
+        "executionId": "c170fe2b-0481-428e-8ca6-3a2d85a0de0e",
+        "chatSessionId": "sess_80792a0a-da8f-410a-9d74-1331b18aa441",
+        "timestamp": 1792879080943
+      },
+      {
+        "executionId": "c170fe2b-0481-428e-8ca6-3a2d85a0de0e",
+        "chatSessionId": "sess_80792a0a-da8f-410a-9d74-1331b18aa441",
+        "timestamp": 1792879358680
+      }
+    ],
+    "1.3 Implement the `POST /savings` operation": [
+      {
+        "executionId": "c170fe2b-0481-428e-8ca6-3a2d85a0de0e",
+        "chatSessionId": "sess_80792a0a-da8f-410a-9d74-1331b18aa441",
+        "timestamp": 1792877871557
+      },
+      {
+        "executionId": "c170fe2b-0481-428e-8ca6-3a2d85a0de0e",
+        "chatSessionId": "sess_80792a0a-da8f-410a-9d74-1331b18aa441",
+        "timestamp": 1792879361373
+      }
+    ],
+    "1.4 Implement the `GET /prices` and `GET /regions` synthesis operations": [
+      {
+        "executionId": "c170fe2b-0481-428e-8ca6-3a2d85a0de0e",
+        "chatSessionId": "sess_80792a0a-da8f-410a-9d74-1331b18aa441",
+        "timestamp": 1792877871634
+      }
+    ],
+    "1.5 Implement engine-exception → HTTP status mapping": [
+      {
+        "executionId": "c170fe2b-0481-428e-8ca6-3a2d85a0de0e",
+        "chatSessionId": "sess_80792a0a-da8f-410a-9d74-1331b18aa441",
+        "timestamp": 1792877871744
+      }
+    ],
+    "1.6 Checkpoint - Python_Service tests pass": [
+      {
+        "executionId": "c170fe2b-0481-428e-8ca6-3a2d85a0de0e",
+        "chatSessionId": "sess_80792a0a-da8f-410a-9d74-1331b18aa441",
+        "timestamp": 1792877871804
+      }
+    ],
+    "3.1 Implement `src/pythonClient.js` HTTP client with timeout and guards": [
+      {
+        "executionId": "c170fe2b-0481-428e-8ca6-3a2d85a0de0e",
+        "chatSessionId": "sess_80792a0a-da8f-410a-9d74-1331b18aa441",
+        "timestamp": 1792877871845
+      }
+    ],
+    "3.2 Implement `src/mapping.js` form → HouseProfile + Period mapping": [
+      {
+        "executionId": "c170fe2b-0481-428e-8ca6-3a2d85a0de0e",
+        "chatSessionId": "sess_80792a0a-da8f-410a-9d74-1331b18aa441",
+        "timestamp": 1792877871898
+      }
+    ],
+    "3.3 Implement the engine-result → forecast payload adapter in `src/mapping.js`": [
+      {
+        "executionId": "c170fe2b-0481-428e-8ca6-3a2d85a0de0e",
+        "chatSessionId": "sess_80792a0a-da8f-410a-9d74-1331b18aa441",
+        "timestamp": 1792877871944
+      }
+    ],
+    "4.1 Add express dependency, serve script, and boot validation": [
+      {
+        "executionId": "c170fe2b-0481-428e-8ca6-3a2d85a0de0e",
+        "chatSessionId": "sess_80792a0a-da8f-410a-9d74-1331b18aa441",
+        "timestamp": 1792877871990
+      }
+    ],
+    "4.2 Implement `POST /api/predict` and `POST /api/recommendations` handlers": [
+      {
+        "executionId": "c170fe2b-0481-428e-8ca6-3a2d85a0de0e",
+        "chatSessionId": "sess_80792a0a-da8f-410a-9d74-1331b18aa441",
+        "timestamp": 1792877872047
+      }
+    ],
+    "4.3 Implement `GET /api/prices` and `GET /api/prices/regions` handlers": [
+      {
+        "executionId": "c170fe2b-0481-428e-8ca6-3a2d85a0de0e",
+        "chatSessionId": "sess_80792a0a-da8f-410a-9d74-1331b18aa441",
+        "timestamp": 1792877872091
+      }
+    ],
+    "4.4 Checkpoint - Node_Server routes and tests pass": [
+      {
+        "executionId": "c170fe2b-0481-428e-8ca6-3a2d85a0de0e",
+        "chatSessionId": "sess_80792a0a-da8f-410a-9d74-1331b18aa441",
+        "timestamp": 1792877872140
+      }
+    ],
+    "6.1 Replace the home-page stubs in `frontend/home/home.js`": [
+      {
+        "executionId": "c170fe2b-0481-428e-8ca6-3a2d85a0de0e",
+        "chatSessionId": "sess_80792a0a-da8f-410a-9d74-1331b18aa441",
+        "timestamp": 1792877872196
+      }
+    ],
+    "6.2 Replace the price-tracker stubs in `frontend/price-tracker/price-tracker.js`": [
+      {
+        "executionId": "c170fe2b-0481-428e-8ca6-3a2d85a0de0e",
+        "chatSessionId": "sess_80792a0a-da8f-410a-9d74-1331b18aa441",
+        "timestamp": 1792877872273
+      }
+    ],
+    "7.1 Boot both processes and confirm the full linear flow": [
+      {
+        "executionId": "c170fe2b-0481-428e-8ca6-3a2d85a0de0e",
+        "chatSessionId": "sess_80792a0a-da8f-410a-9d74-1331b18aa441",
+        "timestamp": 1792877872316
+      }
+    ]
+  }
+}
