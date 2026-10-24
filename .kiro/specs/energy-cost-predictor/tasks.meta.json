@@ -1,0 +1,408 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "1.1 Create package layout and tooling": [
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792867150183
+      },
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792867160334
+      },
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792867463388
+      }
+    ],
+    "1.2 Define core data models as frozen dataclasses": [
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792867150537
+      },
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792867467778
+      },
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792867605852
+      }
+    ],
+    "1.3 Define the typed exception hierarchy": [
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792867150810
+      },
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792867468276
+      },
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792867606863
+      }
+    ],
+    "2.1 Define provider Protocol interfaces": [
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792867151070
+      },
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792867610321
+      },
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792867701501
+      }
+    ],
+    "2.2 Implement placeholder providers with made-up MA data": [
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792867151355
+      },
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792867706862
+      },
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792867934955
+      }
+    ],
+    "2.3 Implement the provider-adapter boundary (field + timeout guards)": [
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792867152122
+      },
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792867707549
+      },
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792867936405
+      }
+    ],
+    "3.1 Build the Massachusetts RegionProfile and a region registry": [
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792867152310
+      },
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792867611359
+      },
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792867702521
+      }
+    ],
+    "4.1 Implement fuel-neutral heating demand computation": [
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792867152476
+      },
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792867710112
+      },
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792867937804
+      }
+    ],
+    "5. Checkpoint - Ensure all tests pass": [
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792867152621
+      },
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792867956121
+      },
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792868026260
+      }
+    ],
+    "6.1 Implement heat-pump electricity from the COP curve": [
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792867152748
+      },
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792868031670
+      },
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792868812544
+      }
+    ],
+    "6.2 Implement the seasonal rate selector": [
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792867152891
+      },
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792867711534
+      },
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792867938470
+      }
+    ],
+    "7.1 Implement conventional heating cost": [
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792867153043
+      },
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792868032305
+      },
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792868813309
+      }
+    ],
+    "7.2 Implement heat-pump heating cost with seasonal rating": [
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792867153220
+      },
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792868816260
+      },
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792868875048
+      }
+    ],
+    "8. Checkpoint - Ensure all tests pass": [
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792867153367
+      },
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792868878142
+      },
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792868949077
+      }
+    ],
+    "9.1 Implement the Predictor with input validation and provider wiring": [
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792867153509
+      },
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792868954726
+      },
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792869192877
+      }
+    ],
+    "9.2 Implement SavingsComparison": [
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792867153826
+      },
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792869198003
+      },
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792869346800
+      }
+    ],
+    "10.1 Implement AccuracyReport": [
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792867153989
+      },
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792868955884
+      },
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792869191740
+      }
+    ],
+    "10.2 Implement single-scalar bisection Calibration": [
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792867154153
+      },
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792869196873
+      },
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792869348046
+      }
+    ],
+    "11.1 Add an example entry point assembling the full pipeline": [
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792867154294
+      },
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792869351832
+      },
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792869467692
+      }
+    ],
+    "12. Final checkpoint - Ensure all tests pass": [
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792867154452
+      },
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792869470765
+      },
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792869537027
+      }
+    ],
+    "1. Set up project structure, dataclasses, and typed exceptions": [
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792867607055
+      }
+    ],
+    "3. Implement region configuration and resolution": [
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792867702675
+      }
+    ],
+    "2. Define provider Protocols and placeholder providers": [
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792867936671
+      }
+    ],
+    "4. Implement the HeatingDemandModel (pure core)": [
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792867937955
+      }
+    ],
+    "6. Implement the HeatPumpModel and SeasonalHeatPumpRate (pure core)": [
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792868812775
+      }
+    ],
+    "7. Implement the CostModel (pure core)": [
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792868875238
+      }
+    ],
+    "9. Implement the Predictor orchestrator and SavingsComparison": [
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792869347467
+      }
+    ],
+    "10. Implement Calibration and AccuracyReport": [
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792869348315
+      }
+    ],
+    "11. Wire the pipeline together with a runnable example and integration tests": [
+      {
+        "executionId": "6f47d32d-8b9f-4ed4-997a-dba2bdf4a8be",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792869467840
+      }
+    ]
+  }
+}

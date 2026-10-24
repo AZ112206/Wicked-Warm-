@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+# Wicked-Warm-
+=======
 # Wicked Warm
 
 A friendly chatbot assistant powered by Google's **Gemini 2.0 Flash** model.
@@ -114,3 +117,4 @@ backend API call` so the backend can be wired in later without restructuring.
 ├── package.json
 └── README.md
 ```
+>>>>>>> 1855156ed9f1fca4b3b37c5fa67b74da238a0f42
