@@ -10,7 +10,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: join(__dirname, "..", ".env") });
 
 const apiKey = process.env.GEMINI_API_KEY;
-const model = process.env.GEMINI_MODEL || "gemini-2.0-flash";
+const model = process.env.GEMINI_MODEL || "gemini-3.8-flash";
 
 if (!apiKey || apiKey === "your_gemini_api_key_here") {
   console.error(

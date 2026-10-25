@@ -20,22 +20,19 @@
  * The browser should call YOUR backend, which holds any API keys server-side.
  */
 async function fetchPrediction(userInput) {
-  // Simulate a network delay so the UI feels real.
-  await new Promise((r) => setTimeout(r, 600));
-  return {
-    amount: 182.4,
-    lastMonth: 162.8,
-    currency: "USD",
-    // 6-month projection (recent actuals + the forecast month).
-    series: [
-      { label: "May", value: 128 },
-      { label: "Jun", value: 141 },
-      { label: "Jul", value: 150 },
-      { label: "Aug", value: 169 },
-      { label: "Sep", value: 163 },
-      { label: "Oct", value: 182, forecast: true },
-    ],
-  };
+  // Calls the Node_Server, which maps the form to the engine request, calls the
+  // Python_Service, and returns the forecast payload. The browser never holds
+  // API keys. Response shape: {amount, lastMonth, currency, series:[{label,value,forecast}]}.
+  const res = await fetch("/api/predict", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(userInput),
+  });
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    throw new Error(body.error || "Forecast failed");
+  }
+  return await res.json();
 }
 
 /**
@@ -46,13 +43,18 @@ async function fetchPrediction(userInput) {
  * based on the prediction and the user's usage/weather signals.
  */
 async function fetchRecommendations(prediction, userInput) {
-  await new Promise((r) => setTimeout(r, 300));
-  return [
-    { title: "Pre-cool before peak hours", body: "Run cooling earlier in the day to avoid higher evening rates when demand spikes." },
-    { title: "Set back the thermostat 2°", body: "A small overnight setback can trim an estimated 6–8% off heating and cooling costs." },
-    { title: "Seal drafts before the cold snap", body: "Forecasted temperature drops will increase heating load — weatherstripping helps most now." },
-    { title: "Shift heavy appliance use", body: "Move laundry and dishwashing to off-peak windows to reduce your rate exposure." },
-  ];
+  // Calls the Node_Server, which builds a Gemini prompt from the predicted cost
+  // and returns a validated action plan. Response shape: [{title, body}, ...].
+  const res = await fetch("/api/recommendations", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ prediction, userInput }),
+  });
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    throw new Error(body.error || "Recommendations failed");
+  }
+  return await res.json();
 }
 
 // ---------------------------------------------------------------------------

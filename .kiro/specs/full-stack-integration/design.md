@@ -226,7 +226,7 @@ async function fetchRegionalPrices() {
   "house_id": "web-session",
   "region_key": "MA",
   "heated_area_sqft": 1800,
-  "ua_coefficient": 0.0,
+  "ua_coefficient": 0.00004,
   "setpoint_f": 68,
   "conventional_fuel": "natural_gas",
   "system_efficiency": 0.9
@@ -282,7 +282,7 @@ The browser posts the `userInput` object already assembled in `home.js` (`locati
 | (none) | `conventional_fuel` | Default `"natural_gas"` (a fuel defined for `MA`) (Req 3.5). |
 | (none) | `system_efficiency` | Default `0.9` (in `(0, 1]`) (Req 3.5). |
 | (none) | `house_id` | Constant `"web-session"`. |
-| (none) | `ua_coefficient` | `0.0` (engine seed; not a required field). |
+| (none) | `ua_coefficient` | `0.00004` — a positive per-sqft heat-loss seed (engine seed; not a required field). The engine computes `UA_effective = ua_coefficient * heated_area_sqft * demand_scale`, so a `0.0` seed would zero every forecast; this mirrors the engine reference example and lets calibration tune `demand_scale` from a non-zero baseline. |
 | bill amount | `reference_actual_usd` | Included only when a number in `[0.01, 999999.99]`; otherwise omitted without rejecting the submission (Req 4.1, 4.3, 4.4). |
 
 **`heated_area_sqft` derivation formula** (deterministic, always within `(0, 100000]`):

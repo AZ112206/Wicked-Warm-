@@ -45,6 +45,16 @@
         "executionId": "c170fe2b-0481-428e-8ca6-3a2d85a0de0e",
         "chatSessionId": "sess_80792a0a-da8f-410a-9d74-1331b18aa441",
         "timestamp": 1792879361373
+      },
+      {
+        "executionId": "8a60a1dd-4c8a-4f33-bd44-df8158bc2a49",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792880105361
+      },
+      {
+        "executionId": "8a60a1dd-4c8a-4f33-bd44-df8158bc2a49",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792880108827
       }
     ],
     "1.4 Implement the `GET /prices` and `GET /regions` synthesis operations": [
@@ -52,6 +62,21 @@
         "executionId": "c170fe2b-0481-428e-8ca6-3a2d85a0de0e",
         "chatSessionId": "sess_80792a0a-da8f-410a-9d74-1331b18aa441",
         "timestamp": 1792877871634
+      },
+      {
+        "executionId": "8a60a1dd-4c8a-4f33-bd44-df8158bc2a49",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792880111922
+      },
+      {
+        "executionId": "8a60a1dd-4c8a-4f33-bd44-df8158bc2a49",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792880116958
+      },
+      {
+        "executionId": "8a60a1dd-4c8a-4f33-bd44-df8158bc2a49",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792880285957
       }
     ],
     "1.5 Implement engine-exception → HTTP status mapping": [
@@ -59,6 +84,21 @@
         "executionId": "c170fe2b-0481-428e-8ca6-3a2d85a0de0e",
         "chatSessionId": "sess_80792a0a-da8f-410a-9d74-1331b18aa441",
         "timestamp": 1792877871744
+      },
+      {
+        "executionId": "8a60a1dd-4c8a-4f33-bd44-df8158bc2a49",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792880112035
+      },
+      {
+        "executionId": "8a60a1dd-4c8a-4f33-bd44-df8158bc2a49",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792880288871
+      },
+      {
+        "executionId": "8a60a1dd-4c8a-4f33-bd44-df8158bc2a49",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792880437480
       }
     ],
     "1.6 Checkpoint - Python_Service tests pass": [
@@ -66,6 +106,21 @@
         "executionId": "c170fe2b-0481-428e-8ca6-3a2d85a0de0e",
         "chatSessionId": "sess_80792a0a-da8f-410a-9d74-1331b18aa441",
         "timestamp": 1792877871804
+      },
+      {
+        "executionId": "8a60a1dd-4c8a-4f33-bd44-df8158bc2a49",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792880112169
+      },
+      {
+        "executionId": "8a60a1dd-4c8a-4f33-bd44-df8158bc2a49",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792880440380
+      },
+      {
+        "executionId": "8a60a1dd-4c8a-4f33-bd44-df8158bc2a49",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792880757076
       }
     ],
     "3.1 Implement `src/pythonClient.js` HTTP client with timeout and guards": [
@@ -73,6 +128,21 @@
         "executionId": "c170fe2b-0481-428e-8ca6-3a2d85a0de0e",
         "chatSessionId": "sess_80792a0a-da8f-410a-9d74-1331b18aa441",
         "timestamp": 1792877871845
+      },
+      {
+        "executionId": "8a60a1dd-4c8a-4f33-bd44-df8158bc2a49",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792880112394
+      },
+      {
+        "executionId": "8a60a1dd-4c8a-4f33-bd44-df8158bc2a49",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792880770446
+      },
+      {
+        "executionId": "8a60a1dd-4c8a-4f33-bd44-df8158bc2a49",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792880944376
       }
     ],
     "3.2 Implement `src/mapping.js` form → HouseProfile + Period mapping": [
@@ -80,6 +150,21 @@
         "executionId": "c170fe2b-0481-428e-8ca6-3a2d85a0de0e",
         "chatSessionId": "sess_80792a0a-da8f-410a-9d74-1331b18aa441",
         "timestamp": 1792877871898
+      },
+      {
+        "executionId": "8a60a1dd-4c8a-4f33-bd44-df8158bc2a49",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792880112503
+      },
+      {
+        "executionId": "8a60a1dd-4c8a-4f33-bd44-df8158bc2a49",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792880771622
+      },
+      {
+        "executionId": "8a60a1dd-4c8a-4f33-bd44-df8158bc2a49",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792880945212
       }
     ],
     "3.3 Implement the engine-result → forecast payload adapter in `src/mapping.js`": [
@@ -87,6 +172,21 @@
         "executionId": "c170fe2b-0481-428e-8ca6-3a2d85a0de0e",
         "chatSessionId": "sess_80792a0a-da8f-410a-9d74-1331b18aa441",
         "timestamp": 1792877871944
+      },
+      {
+        "executionId": "8a60a1dd-4c8a-4f33-bd44-df8158bc2a49",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792880112618
+      },
+      {
+        "executionId": "de1a9540-b2b9-46a1-add0-028cd04ff746",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792881629921
+      },
+      {
+        "executionId": "de1a9540-b2b9-46a1-add0-028cd04ff746",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792881733249
       }
     ],
     "4.1 Add express dependency, serve script, and boot validation": [
@@ -94,6 +194,21 @@
         "executionId": "c170fe2b-0481-428e-8ca6-3a2d85a0de0e",
         "chatSessionId": "sess_80792a0a-da8f-410a-9d74-1331b18aa441",
         "timestamp": 1792877871990
+      },
+      {
+        "executionId": "8a60a1dd-4c8a-4f33-bd44-df8158bc2a49",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792880112778
+      },
+      {
+        "executionId": "de1a9540-b2b9-46a1-add0-028cd04ff746",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792881400128
+      },
+      {
+        "executionId": "de1a9540-b2b9-46a1-add0-028cd04ff746",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792881616841
       }
     ],
     "4.2 Implement `POST /api/predict` and `POST /api/recommendations` handlers": [
@@ -101,6 +216,21 @@
         "executionId": "c170fe2b-0481-428e-8ca6-3a2d85a0de0e",
         "chatSessionId": "sess_80792a0a-da8f-410a-9d74-1331b18aa441",
         "timestamp": 1792877872047
+      },
+      {
+        "executionId": "8a60a1dd-4c8a-4f33-bd44-df8158bc2a49",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792880112860
+      },
+      {
+        "executionId": "de1a9540-b2b9-46a1-add0-028cd04ff746",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792881620784
+      },
+      {
+        "executionId": "de1a9540-b2b9-46a1-add0-028cd04ff746",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792881913614
       }
     ],
     "4.3 Implement `GET /api/prices` and `GET /api/prices/regions` handlers": [
@@ -108,6 +238,21 @@
         "executionId": "c170fe2b-0481-428e-8ca6-3a2d85a0de0e",
         "chatSessionId": "sess_80792a0a-da8f-410a-9d74-1331b18aa441",
         "timestamp": 1792877872091
+      },
+      {
+        "executionId": "8a60a1dd-4c8a-4f33-bd44-df8158bc2a49",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792880112963
+      },
+      {
+        "executionId": "de1a9540-b2b9-46a1-add0-028cd04ff746",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792881916952
+      },
+      {
+        "executionId": "de1a9540-b2b9-46a1-add0-028cd04ff746",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792882043539
       }
     ],
     "4.4 Checkpoint - Node_Server routes and tests pass": [
@@ -115,6 +260,21 @@
         "executionId": "c170fe2b-0481-428e-8ca6-3a2d85a0de0e",
         "chatSessionId": "sess_80792a0a-da8f-410a-9d74-1331b18aa441",
         "timestamp": 1792877872140
+      },
+      {
+        "executionId": "8a60a1dd-4c8a-4f33-bd44-df8158bc2a49",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792880113087
+      },
+      {
+        "executionId": "de1a9540-b2b9-46a1-add0-028cd04ff746",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792882046759
+      },
+      {
+        "executionId": "de1a9540-b2b9-46a1-add0-028cd04ff746",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792882076631
       }
     ],
     "6.1 Replace the home-page stubs in `frontend/home/home.js`": [
@@ -122,6 +282,21 @@
         "executionId": "c170fe2b-0481-428e-8ca6-3a2d85a0de0e",
         "chatSessionId": "sess_80792a0a-da8f-410a-9d74-1331b18aa441",
         "timestamp": 1792877872196
+      },
+      {
+        "executionId": "8a60a1dd-4c8a-4f33-bd44-df8158bc2a49",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792880113202
+      },
+      {
+        "executionId": "de1a9540-b2b9-46a1-add0-028cd04ff746",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792882086862
+      },
+      {
+        "executionId": "de1a9540-b2b9-46a1-add0-028cd04ff746",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792882113082
       }
     ],
     "6.2 Replace the price-tracker stubs in `frontend/price-tracker/price-tracker.js`": [
@@ -129,6 +304,21 @@
         "executionId": "c170fe2b-0481-428e-8ca6-3a2d85a0de0e",
         "chatSessionId": "sess_80792a0a-da8f-410a-9d74-1331b18aa441",
         "timestamp": 1792877872273
+      },
+      {
+        "executionId": "8a60a1dd-4c8a-4f33-bd44-df8158bc2a49",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792880113314
+      },
+      {
+        "executionId": "de1a9540-b2b9-46a1-add0-028cd04ff746",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792882113954
+      },
+      {
+        "executionId": "de1a9540-b2b9-46a1-add0-028cd04ff746",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792882137324
       }
     ],
     "7.1 Boot both processes and confirm the full linear flow": [
@@ -136,6 +326,56 @@
         "executionId": "c170fe2b-0481-428e-8ca6-3a2d85a0de0e",
         "chatSessionId": "sess_80792a0a-da8f-410a-9d74-1331b18aa441",
         "timestamp": 1792877872316
+      },
+      {
+        "executionId": "8a60a1dd-4c8a-4f33-bd44-df8158bc2a49",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792880113557
+      },
+      {
+        "executionId": "de1a9540-b2b9-46a1-add0-028cd04ff746",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792882143822
+      },
+      {
+        "executionId": "de1a9540-b2b9-46a1-add0-028cd04ff746",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792882691905
+      }
+    ],
+    "1. Build the Python_Service HTTP boundary over the engine": [
+      {
+        "executionId": "8a60a1dd-4c8a-4f33-bd44-df8158bc2a49",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792880757237
+      }
+    ],
+    "3. Build the Node_Server Python client and form/response mapping": [
+      {
+        "executionId": "de1a9540-b2b9-46a1-add0-028cd04ff746",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792881733761
+      }
+    ],
+    "4. Wire the Node_Server Express application and routes": [
+      {
+        "executionId": "de1a9540-b2b9-46a1-add0-028cd04ff746",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792882076903
+      }
+    ],
+    "6. Wire the frontend to the live Node endpoints": [
+      {
+        "executionId": "de1a9540-b2b9-46a1-add0-028cd04ff746",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792882137473
+      }
+    ],
+    "7. End-to-end verification": [
+      {
+        "executionId": "de1a9540-b2b9-46a1-add0-028cd04ff746",
+        "chatSessionId": "sess_6a46d957-8e2c-4bc9-97ac-1e2c7e0e773e",
+        "timestamp": 1792882692153
       }
     ]
   }

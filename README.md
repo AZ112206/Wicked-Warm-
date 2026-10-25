@@ -1,120 +1,205 @@
-<<<<<<< HEAD
-# Wicked-Warm-
-=======
-# Wicked Warm
+# 🔥 Wicked Warm
 
-A friendly chatbot assistant powered by Google's **Gemini 2.0 Flash** model.
+**Know your heating bill before it hits.** Wicked Warm predicts a home's annual
+heating cost from real weather and energy-price data, shows how much a heat pump
+would save, and hands you an AI-generated action plan to cut the bill — all from
+a single form, no account required.
 
-## Features
+Built for Massachusetts first, designed to extend anywhere.
 
-- Multi-turn chat with conversation memory (the bot remembers earlier messages)
-- Single-shot question helper for quick one-off prompts
-- API key kept out of source and out of git
+---
 
-## Requirements
+## ✨ What it does
 
-- Node.js 18+ (tested on v24)
-- A Gemini API key from https://aistudio.google.com/app/apikey
+| | |
+|---|---|
+| 🌡️ **Real forecasts** | Pulls live daily temperatures (Open-Meteo) and residential energy prices (U.S. EIA) to estimate a home's annual heating cost — not a random mock number. |
+| ♨️ **Heat-pump savings** | Compares conventional heating vs. a cold-climate heat pump using a temperature-dependent COP curve and Massachusetts' seasonal electric rate. |
+| 🧾 **Bill calibration** | Upload a recent utility bill amount and the model calibrates itself to *your* home, tightening the estimate. |
+| 🤖 **AI action plan** | Google Gemini turns the prediction into a prioritized, plain-English list of ways to save. |
+| 📈 **Price tracker** | A live view of electricity/gas price trends and a regional comparison. |
 
-## Setup
+---
 
-1. Install dependencies:
-   ```bash
-   npm install
-   ```
+## 🏗️ How it's built
 
-2. Create your local env file from the template:
-   ```powershell
-   Copy-Item .env.example .env   # Windows PowerShell
-   # cp .env.example .env        # macOS / Linux
-   ```
+Three layers, one clean data flow. Secrets never touch the browser.
 
-3. Put your real Gemini API key in `.env`:
-   ```
-   GEMINI_API_KEY=AIza...your_key...
-   GEMINI_MODEL=gemini-2.0-flash
-   ```
-
-   > **Note on key format:** Use a key from https://aistudio.google.com/app/apikey.
-   > Keys that work with the Gemini API endpoint start with `AIza`. If you only get
-   > an `AQ.` key, you're likely in the Google Cloud / Vertex AI console instead of
-   > AI Studio, or using a restricted Workspace account — see Troubleshooting.
-
-## Usage
-
-Start the interactive chatbot:
-```bash
-npm start
 ```
-In the chat:
-- Type a message and press Enter
-- `reset` clears the conversation memory
-- `exit` or `quit` ends the session
-
-Ask a single question without the chat loop:
-```bash
-node src/ask.js "What should I wear when it's wicked warm outside?"
+┌───────────┐     ┌──────────────────────┐     ┌───────────────────────────┐
+│  Browser  │ ──▶ │  Node_Server (Express)│ ──▶ │  Python_Service           │
+│ frontend/ │     │  src/server.js        │     │  energy_cost_predictor/   │
+│ HTML/CSS/ │ ◀── │  • form → engine map  │ ◀── │  • forecast engine        │
+│   JS      │     │  • secret GEMINI key  │     │  • live weather + prices  │
+└───────────┘     │  • calls Gemini (AI)  │     │  • secret EIA key         │
+                  └──────────────────────┘     └───────────────────────────┘
 ```
 
-## Security
+- **Python engine** (`energy_cost_predictor/`) — the forecasting core and a
+  small `http.server` API. **Pure Python standard library** (no numpy/pandas at
+  runtime), so there is **nothing to pip-install**.
+- **Node server** (`src/`) — an Express app that serves the site, maps the form
+  onto the engine, holds the Gemini key server-side, and generates the AI plan.
+- **Frontend** (`frontend/`) — a static multi-page site, no build step.
 
-- **Never commit `.env`.** It is gitignored. Only `.env.example` (placeholders) is committed.
-- If a key is ever exposed (in a screenshot, commit, or chat), **rotate it**: delete it in
-  AI Studio and generate a new one.
-- `git check-ignore .env` should print `.env`, confirming it is ignored.
+---
 
-## Troubleshooting
+## 🚀 Quick start (judges, start here)
 
-- **`API key not valid` / `ACCESS_TOKEN_TYPE_UNSUPPORTED`**: your key isn't a valid AI Studio
-  Gemini API key. Generate one at https://aistudio.google.com/app/apikey (should start with
-  `AIza`). `AQ.` OAuth tokens from the Cloud Console are not accepted by this endpoint.
-- **`Missing GEMINI_API_KEY`**: you haven't created `.env` or left the placeholder value in it.
+### 0. Prerequisites
 
-## Front end
+| Tool | Version | Check | Get it |
+|---|---|---|---|
+| **Node.js** | 18+ (tested on 24) | `node --version` | https://nodejs.org (LTS) |
+| **Python** | 3.14+ | `py --version` (Windows) · `python3 --version` | https://www.python.org/downloads/ |
+| **Gemini API key** | — | — | https://aistudio.google.com/app/apikey (free) |
 
-A static multi-page site (plain HTML/CSS/JS, no build step) under `frontend/`.
-Open `frontend/home/index.html` in a browser, or serve the folder:
+> 💡 The EIA energy-price key is **optional and free**. Without it the app uses
+> built-in placeholder prices and still produces a real, weather-driven forecast.
+
+### 1. Install the Node dependencies
 
 ```bash
-npx serve frontend        # then visit the printed URL
+npm install
 ```
 
-Pages:
-- **Home** (`home/index.html`) — hero, how it works, and a gated flow: enter your
-  home info + a utility bill, generate a forecast, then see the AI action plan.
-- **About** (`about/about.html`) — what the full-stack app does and how it works.
-- **Price Tracker** (`price-tracker/price-tracker.html`) — energy price trends and
-  a regional comparison.
+> ⚠️ **Do _not_ run `pip install`.** The Python engine uses only the standard
+> library. (The pins in `pyproject.toml` are nominal — the code never imports
+> numpy/pandas at runtime.)
 
-All dynamic data is mock, served by stub functions marked `// TODO: replace with
-backend API call` so the backend can be wired in later without restructuring.
+### 2. Add your keys
 
-## Project structure
+Copy the template and open the new `.env`:
+
+```powershell
+Copy-Item .env.example .env   # Windows PowerShell
+# cp .env.example .env         # macOS / Linux
+```
+
+Fill it in:
+
+```ini
+# REQUIRED — get one free at https://aistudio.google.com/app/apikey
+GEMINI_API_KEY=your_real_key_here
+GEMINI_MODEL=gemini-3.8-flash
+
+# OPTIONAL — free + instant at https://www.eia.gov/opendata/register.php
+# Leave blank to use placeholder prices (forecast still works).
+EIA_API_KEY=
+```
+
+### 3. Run it
+
+**Windows — one click:** double-click **`start.bat`**. It launches both
+servers in their own windows and opens the app in your browser automatically.
+
+**Any OS — two terminals:**
+
+```bash
+# Terminal 1 — the forecast engine (leave it running)
+py -m energy_cost_predictor.service          # Windows
+# python3 -m energy_cost_predictor.service   # macOS / Linux
+
+# Terminal 2 — the web server (leave it running)
+node src/server.js
+```
+
+### 4. Open the app
+
+👉 **http://127.0.0.1:3000/home/index.html**
+
+Fill in a location (e.g. `Amherst, MA`), household size, and home type, optionally
+attach a utility bill, and hit **Generate my forecast**. You'll get a predicted
+monthly cost, a 6-month trend, and an AI action plan.
+
+Other pages:
+- 📊 Price tracker — http://127.0.0.1:3000/price-tracker/price-tracker.html
+- ℹ️ About — http://127.0.0.1:3000/about/about.html
+
+> **Keep both terminal windows open while using the app.** Closing them stops the
+> servers. `http://127.0.0.1:3000/` by itself returns a JSON 404 — that's normal;
+> use the `/home/index.html` link above.
+
+---
+
+## 🧪 Running the tests
+
+The engine ships with a `pytest` + `hypothesis` suite (property-based tests over
+the forecasting math):
+
+```bash
+py -m pytest            # Windows
+# python3 -m pytest     # macOS / Linux
+```
+
+---
+
+## 🩺 Troubleshooting
+
+| Symptom | Cause & fix |
+|---|---|
+| **"Something went wrong generating your forecast."** | One of the two servers isn't running, or the Gemini model is stale. Make sure both terminals are up, and that `GEMINI_MODEL=gemini-3.8-flash` in `.env` (older `gemini-2.0-flash` has been retired by Google). |
+| **`npm.ps1 cannot be loaded ... running scripts is disabled`** | PowerShell's execution policy blocks the npm wrapper. Run `node src/server.js` directly, use **Command Prompt**, or run once: `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`. |
+| **`{"error":"Route not found"}` at `http://127.0.0.1:3000/`** | Expected — the root isn't a page. Go to `/home/index.html`. |
+| **`Missing GEMINI_API_KEY`** | `.env` is missing or still has the placeholder. Add a real key from AI Studio. |
+| **Forecast works but no AI plan** | The Gemini call failed. Check the key is a valid AI Studio key and `GEMINI_MODEL` is a current model. |
+| **Prices look generic** | No `EIA_API_KEY` set — the app fell back to placeholder prices. Add a free EIA key for live prices. (Weather is always live.) |
+
+---
+
+## 🔐 Security
+
+- `.env` is **gitignored** — only `.env.example` (placeholders) is committed.
+  Confirm with `git check-ignore .env` (should print `.env`).
+- Both API keys stay **server-side**; the browser never sees them.
+- If a key is ever exposed, rotate it at its provider and update `.env`.
+
+---
+
+## 📁 Project structure
 
 ```
-.
-├── frontend/
-│   ├── shared/shared.css        # palette, nav, footer (shared by all pages)
-│   ├── home/
-│   │   ├── index.html           # Home page (gated prediction flow)
-│   │   ├── home.css
-│   │   └── home.js
-│   ├── about/
-│   │   ├── about.html
-│   │   └── about.css
-│   └── price-tracker/
-│       ├── price-tracker.html
-│       ├── price-tracker.css
-│       └── price-tracker.js
-├── src/                         # Gemini chatbot (separate workstream)
-│   ├── chatbot.js  # Multi-turn chat loop (npm start)
-│   ├── ask.js      # Single-shot prompt helper (node src/ask.js "...")
-│   └── config.js   # Loads & validates env config
-├── Back End/                    # (empty — backend to come)
-├── .env.example    # Template (committed)
-├── .env            # Real secrets (gitignored)
-├── .gitignore
-├── package.json
-└── README.md
+Wicked-Warm/
+├── start.bat                       # One-click launcher (Windows)
+├── .env.example                    # Env template (committed)
+├── .env                            # Your real keys (gitignored)
+├── package.json                    # Node deps + "serve" script
+├── pyproject.toml                  # Python project metadata + test deps
+│
+├── frontend/                       # Static site (no build step)
+│   ├── home/        index.html · home.css · home.js     # forecast + AI plan
+│   ├── price-tracker/  *.html · *.css · *.js            # price trends
+│   ├── about/          *.html · *.css
+│   └── shared/         shared.css                        # shared styling
+│
+├── src/                            # Node server (Express)
+│   ├── server.js                   # routes, static serving, error handling
+│   ├── pythonClient.js             # HTTP client to the Python engine
+│   ├── mapping.js                  # form → engine request, engine → forecast
+│   ├── ask.js                      # Gemini helper
+│   └── config.js                   # loads + validates .env
+│
+├── energy_cost_predictor/          # Python forecast engine (pure stdlib)
+│   ├── service.py                  # HTTP API (predict / savings / prices / regions)
+│   ├── predictor.py                # orchestration + savings comparison
+│   ├── demand.py · heat_pump.py · cost.py · seasonal_rate.py   # core math
+│   ├── calibration.py · accuracy.py                            # bill calibration
+│   ├── live_weather_provider.py    # Open-Meteo (live weather)
+│   ├── live_pricing_provider.py    # U.S. EIA (live prices)
+│   ├── placeholder_providers.py    # offline fallbacks
+│   ├── regions.py · models.py · errors.py · providers.py
+│   └── example.py                  # standalone engine demo
+│
+└── tests/                          # pytest + hypothesis suite
 ```
->>>>>>> 1855156ed9f1fca4b3b37c5fa67b74da238a0f42
+
+---
+
+## 🙏 Credits & data sources
+
+- **Weather:** [Open-Meteo](https://open-meteo.com) — free historical & forecast API (no key).
+- **Energy prices:** [U.S. Energy Information Administration](https://www.eia.gov/opendata/) Open Data API.
+- **Heat-pump COP data:** modeled on [NEEP](https://neep.org)'s Cold Climate ASHP specifications.
+- **AI action plan:** [Google Gemini](https://ai.google.dev/).
+
+Made wicked warm in Massachusetts. 🧣

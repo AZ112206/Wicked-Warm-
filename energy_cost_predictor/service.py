@@ -62,8 +62,16 @@ from urllib.parse import parse_qs, urlparse
 
 from energy_cost_predictor.calibration import Calibration
 from energy_cost_predictor.errors import (
+    DependencyUnavailableError,
+    EfficiencyOutOfRangeError,
     InvalidActualCostError,
+    InvalidPeriodError,
+    MissingFieldError,
+    MissingRegionKeyError,
+    ProviderDataError,
     ProviderTimeoutError,
+    UnknownRegionError,
+    UnsupportedFuelError,
 )
 from energy_cost_predictor.live_pricing_provider import EIAPricingProvider
 from energy_cost_predictor.live_weather_provider import OpenMeteoWeatherProvider
@@ -85,6 +93,7 @@ __all__ = [
     "Fallbacks",
     "GuardingWeatherProvider",
     "GuardingPricingProvider",
+    "UnsupportedMetricError",
     "build_predictor",
     "ServiceHandler",
     "make_server",
@@ -332,6 +341,198 @@ def _parse_period(raw: Any) -> Period:
 
 
 # ---------------------------------------------------------------------------
+# Price-series and regions synthesis (Req 6)
+# ---------------------------------------------------------------------------
+
+
+class UnsupportedMetricError(ValueError):
+    """Raised when ``GET /prices`` is asked for a metric the service can't serve.
+
+    Only ``electricity`` and ``gas`` are supported (Req 6.4). An unsupported
+    metric is a client error; the status mapping (task 1.5) turns this into a
+    400. It subclasses :class:`ValueError` so the current dispatcher degrades
+    gracefully until that mapping lands.
+    """
+
+    def __init__(self, metric: str) -> None:
+        self.metric = metric
+        super().__init__(
+            f"Unsupported metric '{metric}'. Supported metrics: electricity, gas."
+        )
+
+
+#: Lowest and highest ``months`` the service will synthesize. The Node layer
+#: further restricts this to 1–12, but the service accepts the wider 1–60 range.
+_MONTHS_MIN: int = 1
+_MONTHS_MAX: int = 60
+_MONTHS_DEFAULT: int = 12
+
+#: Supported metrics -> (price-table key, display unit, dollars->unit scale).
+#: Electricity is reported in cents per kWh (× 100 from the $/kWh table value);
+#: gas is reported in the table's native $/therm (scale 1.0).
+_METRIC_SPECS: Dict[str, Tuple[str, str, float]] = {
+    "electricity": ("electricity_per_kwh", "¢/kWh", 100.0),
+    "gas": ("natural_gas_per_therm", "$/therm", 1.0),
+}
+
+#: Three-letter calendar month labels indexed by month number (1 == Jan).
+_MONTH_LABELS: Tuple[str, ...] = (
+    "",  # 1-based: index 0 unused
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+)
+
+#: Deterministic seasonal shape multipliers keyed by calendar month (1 == Jan).
+#: Heating-season months are relatively dearer (demand/price pressure peaks in
+#: deep winter) and shoulder/summer months softer — the same "fixed seasonal
+#: curve" idea as the engine's synthetic weather shape. These are *relative*
+#: multipliers; the series is rescaled so its final point equals the anchored
+#: current price, so only the ratios between months matter.
+_SEASONAL_MULTIPLIERS: Dict[int, float] = {
+    1: 1.08,   # Jan — deep winter peak
+    2: 1.06,   # Feb
+    3: 1.02,   # Mar
+    4: 0.98,   # Apr
+    5: 0.94,   # May
+    6: 0.92,   # Jun — summer trough
+    7: 0.92,   # Jul
+    8: 0.93,   # Aug
+    9: 0.95,   # Sep
+    10: 0.99,  # Oct
+    11: 1.03,  # Nov — heating season ramp
+    12: 1.07,  # Dec
+}
+
+#: Placeholder display regions and their fixed ¢/kWh offset off the MA rate.
+#: Clearly synthetic (Req 6.3); flagged via ``fallbacks.regions_placeholder``.
+_PLACEHOLDER_REGION_OFFSETS: Tuple[Tuple[str, float], ...] = (
+    ("Northeast", 1.5),
+    ("Midwest", -2.0),
+    ("South", -3.5),
+    ("West", 0.75),
+)
+
+
+def _single_query_value(
+    query: Dict[str, list], key: str, default: Optional[str]
+) -> Optional[str]:
+    """Return the first value for ``key`` in a ``parse_qs`` dict, or ``default``.
+
+    ``parse_qs`` maps each key to a list of values; a repeated parameter keeps
+    the first occurrence.
+    """
+    values = query.get(key)
+    if not values:
+        return default
+    return values[0]
+
+
+def _metric_spec(metric: Optional[str]) -> Tuple[str, str, float]:
+    """Resolve a metric name to its ``(price_key, unit, scale)`` spec.
+
+    :raises UnsupportedMetricError: If ``metric`` is not one of the supported
+        values (Req 6.4).
+    """
+    spec = _METRIC_SPECS.get(metric or "")
+    if spec is None:
+        raise UnsupportedMetricError("" if metric is None else metric)
+    return spec
+
+
+def _parse_months(raw: Optional[str]) -> int:
+    """Parse and range-check the ``months`` query value (service range 1–60).
+
+    An absent value defaults to :data:`_MONTHS_DEFAULT`. A present value must be
+    an integer in the inclusive range ``[_MONTHS_MIN, _MONTHS_MAX]``.
+
+    :raises ValueError: If ``months`` is non-integer or out of range (the status
+        mapping turns this into a 400).
+    """
+    if raw is None or raw.strip() == "":
+        return _MONTHS_DEFAULT
+    try:
+        months = int(raw.strip())
+    except ValueError:
+        raise ValueError(f"'months' must be an integer, got '{raw}'.")
+    if months < _MONTHS_MIN or months > _MONTHS_MAX:
+        raise ValueError(
+            f"'months' must be between {_MONTHS_MIN} and {_MONTHS_MAX}, got {months}."
+        )
+    return months
+
+
+def _current_metric_price(
+    predictor: Predictor, price_key: str, scale: float
+) -> float:
+    """Read the current point price for ``price_key`` from the active provider.
+
+    Fetches the Massachusetts price table through the predictor's guarding
+    pricing adapter (so any live-source failure already flipped
+    ``fallbacks.pricing`` before this returns), multiplies by ``scale`` to
+    convert units (×100 for cents), and rounds to two decimal places. A missing
+    key or a negative table value is clamped to a non-negative result so the
+    synthesized series and region rates stay ≥ 0 (Req 6.2, 6.3).
+    """
+    table: PriceTable = predictor.pricing_adapter.get_prices("MA")
+    raw = table.prices.get(price_key, 0.0)
+    value = max(float(raw) * scale, 0.0)
+    return round(value, 2)
+
+
+def _synthesize_price_points(current_price: float, months: int) -> list:
+    """Build a trailing ``months``-long seasonal series ending at the latest month.
+
+    Only the final point is a real observation (the anchored current price); the
+    earlier points are a derived trailing estimate produced by a deterministic
+    seasonal shape (:data:`_SEASONAL_MULTIPLIERS`) rescaled so the final point
+    equals ``current_price``. The series is ordered oldest -> newest and ends
+    with the current calendar month, so it always carries exactly ``months``
+    points, each with a non-empty month label and a value ≥ 0 (Req 6.1, 6.2).
+    """
+    current_month = date.today().month
+
+    # Walk back ``months - 1`` calendar months from the current month so the
+    # series is ordered oldest -> newest and ends at the most recent month.
+    month_numbers = []
+    for offset in range(months - 1, -1, -1):
+        # ((current - offset - 1) mod 12) + 1 maps to a 1..12 month number.
+        month_numbers.append(((current_month - offset - 1) % 12) + 1)
+
+    anchor_multiplier = _SEASONAL_MULTIPLIERS[current_month]
+
+    points = []
+    for month_number in month_numbers:
+        multiplier = _SEASONAL_MULTIPLIERS[month_number]
+        # Rescale so the final (current) month lands exactly on current_price.
+        value = current_price * (multiplier / anchor_multiplier)
+        points.append(
+            {"month": _MONTH_LABELS[month_number], "value": round(max(value, 0.0), 2)}
+        )
+
+    # Guarantee the final point equals the anchored current price exactly,
+    # independent of floating-point rounding above.
+    if points:
+        points[-1]["value"] = round(max(current_price, 0.0), 2)
+
+    return points
+
+
+def _percent_change(points: list) -> float:
+    """Return the percent delta between the last two synthesized points.
+
+    Used for a region's ``change`` field. With fewer than two points, or a
+    zero prior value, the change is ``0.0``. Rounded to two decimal places.
+    """
+    if len(points) < 2:
+        return 0.0
+    prev = points[-2]["value"]
+    last = points[-1]["value"]
+    if prev == 0:
+        return 0.0
+    return round((last - prev) / prev * 100.0, 2)
+
+
+# ---------------------------------------------------------------------------
 # HTTP boundary (Req 2.7)
 # ---------------------------------------------------------------------------
 
@@ -389,17 +590,63 @@ class ServiceHandler(BaseHTTPRequestHandler):
             return
         self._dispatch(lambda: handler(query))
 
-    def _dispatch(self, run: Callable[[], None]) -> None:
-        """Run an operation handler, serializing unhandled errors as 500 JSON.
+    #: Engine exceptions that are client errors -> HTTP 400 (Req 2.8, 2.9, 2.10,
+    #: 9.2, 9.3). Each already carries a descriptive message naming the offending
+    #: field/reason/key, so ``str(exc)`` is used verbatim as the error body.
+    #: ``UnsupportedMetricError`` and the out-of-1–60 ``months`` case are plain
+    #: ``ValueError`` instances handled by the ``ValueError`` branch below.
+    _CLIENT_ERRORS: Tuple[type, ...] = (
+        MissingFieldError,
+        InvalidPeriodError,
+        MissingRegionKeyError,
+        UnknownRegionError,
+        UnsupportedFuelError,
+        EfficiencyOutOfRangeError,
+    )
 
-        Operation-specific engine-exception -> HTTP-status mapping (400/502) is
-        added in a later task; this guard guarantees that even an unexpected
-        failure yields a JSON body (Req 2.7) rather than a bare stack trace.
+    #: Engine exceptions that mean an upstream data source is unavailable even
+    #: after per-source fallback -> HTTP 502 (Req 1.8, 8.7). ``ProviderTimeoutError``
+    #: and ``ProviderDataError`` only reach the dispatcher if they escaped the
+    #: guarding providers (a non-fallback path); ``DependencyUnavailableError``
+    #: signals a missing required dependency.
+    _UPSTREAM_ERRORS: Tuple[type, ...] = (
+        DependencyUnavailableError,
+        ProviderTimeoutError,
+        ProviderDataError,
+    )
+
+    def _dispatch(self, run: Callable[[], None]) -> None:
+        """Run an operation handler, mapping engine exceptions to HTTP status.
+
+        Maps the engine's typed exceptions to the design's "Engine exception ->
+        HTTP status" table:
+
+        - Client errors (missing field, invalid period, missing/unknown region,
+          unsupported fuel, efficiency out of range) -> **400** naming the cause
+          via ``str(exc)`` (Req 2.8, 2.9, 9.2, 9.3).
+        - An unsupported ``metric`` (:class:`UnsupportedMetricError`) and an
+          out-of-1–60 ``months`` value (a plain :class:`ValueError` from
+          :func:`_parse_months`) -> **400** (Req 2.3, 2.10, 6.4). These are the
+          only ``ValueError`` instances that reach the dispatcher from the GET
+          handlers; POST body-parsing ``ValueError`` instances are handled
+          upstream in :meth:`do_POST`.
+        - Upstream-unavailable errors surviving per-source fallback
+          (:class:`DependencyUnavailableError`, :class:`ProviderTimeoutError`,
+          :class:`ProviderDataError`) -> **502** (Req 1.8, 8.7).
+
+        Every response is JSON ``{error: <message>}`` (Req 2.7). A final
+        catch-all turns any truly unexpected error into a defensive 500.
         """
         try:
             run()
-        except NotImplementedError as exc:
-            self._send_json(501, {"error": str(exc) or "Not implemented"})
+        except self._CLIENT_ERRORS as exc:
+            self._send_json(400, {"error": str(exc)})
+        except self._UPSTREAM_ERRORS as exc:
+            self._send_json(502, {"error": str(exc)})
+        except ValueError as exc:
+            # UnsupportedMetricError (a ValueError subclass) and the out-of-range
+            # ``months`` ValueError from the GET handlers (Req 2.10, 6.4, 2.3).
+            self._send_json(400, {"error": str(exc)})
         except Exception as exc:  # pragma: no cover - defensive catch-all
             self._send_json(500, {"error": f"Internal error: {exc}"})
 
@@ -496,12 +743,96 @@ class ServiceHandler(BaseHTTPRequestHandler):
         )
 
     def _handle_prices(self, query: Dict[str, list]) -> None:
-        """``GET /prices`` — monthly price-series synthesis (task 1.4)."""
-        raise NotImplementedError("prices operation not yet implemented")
+        """``GET /prices`` — monthly price-series synthesis (task 1.4).
+
+        Implements the design "Price series and regions synthesis (Req 6)"
+        price-series flow. Supports two metrics (Req 6.4):
+
+        =============  ==========  ================================
+        ``metric``     unit        price-table key -> point price
+        =============  ==========  ================================
+        ``electricity``  ``¢/kWh``   ``electricity_per_kwh`` × 100
+        ``gas``          ``$/therm`` ``natural_gas_per_therm``
+        =============  ==========  ================================
+
+        Any other ``metric`` raises :class:`UnsupportedMetricError` (a
+        ``ValueError`` subclass) naming the value, which the status mapping
+        (task 1.5) turns into a 400 (Req 2.10, 6.4). ``months`` must be an
+        integer in the service range 1–60; anything else raises ``ValueError``.
+        ``months`` defaults to 12 when absent.
+
+        The current point price is read from the active pricing provider via
+        :func:`build_predictor` (live ``EIAPricingProvider`` or placeholder on
+        fallback), and a trailing ``months``-long deterministic seasonal series
+        is anchored so the final point equals that current price. The response
+        is ``{metric, unit, points, fallbacks}`` with exactly ``months`` ordered
+        points — each a non-empty month label (``"Nov"``, ``"Dec"``, …) and a
+        value ≥ 0 — ending with the most recent calendar month (Req 6.1, 6.2).
+        Only the latest point is a real observation; the earlier points are a
+        derived trailing estimate (see :func:`_synthesize_price_points`).
+        """
+        metric = _single_query_value(query, "metric", default="electricity")
+        months = _parse_months(_single_query_value(query, "months", default=None))
+
+        price_key, unit, scale = _metric_spec(metric)
+
+        predictor, fallbacks = build_predictor(timeout_seconds=self.timeout_seconds)
+        current_price = _current_metric_price(predictor, price_key, scale)
+
+        points = _synthesize_price_points(current_price, months)
+
+        self._send_json(
+            200,
+            {
+                "metric": metric,
+                "unit": unit,
+                "points": points,
+                "fallbacks": fallbacks.as_dict(),
+            },
+        )
 
     def _handle_regions(self, query: Dict[str, list]) -> None:
-        """``GET /regions`` — regions list synthesis (task 1.4)."""
-        raise NotImplementedError("regions operation not yet implemented")
+        """``GET /regions`` — regions list synthesis (task 1.4).
+
+        Implements the design "Price series and regions synthesis (Req 6)"
+        regions flow. The engine configures only Massachusetts as a real region,
+        so the service returns one real MA entry built from the current
+        electricity price (``rate`` in ¢/kWh from ``electricity_per_kwh`` × 100,
+        ``change`` = the percent delta between the last two synthesized monthly
+        electricity points) plus clearly-labeled placeholder entries for the
+        other display regions the frontend table expects — Northeast, Midwest,
+        South, and West — each a non-negative rate generated from a fixed offset
+        off the MA rate (Req 6.3).
+
+        The placeholder regions are flagged via ``fallbacks.regions_placeholder
+        = true``. The response is ``{regions: [{region, rate, change}],
+        fallbacks}``; the ``regions_placeholder`` flag is added to the fallbacks
+        dict for this response only so the predict/savings responses keep their
+        ``{weather, pricing}`` shape.
+        """
+        predictor, fallbacks = build_predictor(timeout_seconds=self.timeout_seconds)
+
+        # MA real entry: electricity rate in ¢/kWh and the month-over-month
+        # change taken from the last two synthesized electricity points.
+        ma_rate = _current_metric_price(predictor, "electricity_per_kwh", scale=100.0)
+        electricity_points = _synthesize_price_points(ma_rate, months=12)
+        change = _percent_change(electricity_points)
+
+        regions = [{"region": "Massachusetts", "rate": ma_rate, "change": change}]
+
+        # Placeholder display regions from fixed offsets off the MA rate; each
+        # rate is clamped to be non-negative (Req 6.3).
+        for region_name, offset in _PLACEHOLDER_REGION_OFFSETS:
+            rate = round(max(ma_rate + offset, 0.0), 2)
+            regions.append({"region": region_name, "rate": rate, "change": 0.0})
+
+        self._send_json(
+            200,
+            {
+                "regions": regions,
+                "fallbacks": {**fallbacks.as_dict(), "regions_placeholder": True},
+            },
+        )
 
     # -- IO helpers ---------------------------------------------------------
 
@@ -588,12 +919,48 @@ def _resolve_port(argv: Optional[list] = None) -> int:
     return DEFAULT_PORT
 
 
+def _load_dotenv() -> None:
+    """Load KEY=value pairs from a project-root ``.env`` into ``os.environ``.
+
+    A tiny, dependency-free loader (the engine is stdlib-only). It reads the
+    ``.env`` file at the repository root — two levels up from this module — so
+    the service picks up ``EIA_API_KEY`` the same way the Node_Server picks it up
+    via dotenv. Existing environment variables are NOT overwritten, so a value
+    exported in the shell still wins. Lines that are blank, comments (``#``), or
+    lack an ``=`` are ignored; surrounding quotes on the value are stripped. Any
+    read error is swallowed — a missing or unreadable ``.env`` simply means the
+    relevant providers fall back to placeholders.
+    """
+    import os.path
+
+    root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    env_path = os.path.join(root, ".env")
+    try:
+        with open(env_path, "r", encoding="utf-8") as fh:
+            for line in fh:
+                line = line.strip()
+                if not line or line.startswith("#") or "=" not in line:
+                    continue
+                key, _, value = line.partition("=")
+                key = key.strip()
+                value = value.strip().strip("\"").strip("\x27")
+                if key and key not in os.environ:
+                    os.environ[key] = value
+    except OSError:
+        # No .env (or unreadable): providers fall back to placeholders.
+        return
+
+
 def main(argv: Optional[list] = None) -> None:
     """Start the service and serve until interrupted.
 
     Runnable as ``python -m energy_cost_predictor.service`` on a configurable
     port (default 8000): ``PORT`` env var, a positional port, or ``--port``.
+
+    Loads a project-root ``.env`` (if present) before starting so ``EIA_API_KEY``
+    is available to the pricing provider without a manual shell export.
     """
+    _load_dotenv()
     port = _resolve_port(argv)
     server = make_server(port)
     host, bound_port = server.server_address[:2]

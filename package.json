@@ -6,7 +6,8 @@
   "main": "src/chatbot.js",
   "scripts": {
     "start": "node src/chatbot.js",
-    "ask": "node src/ask.js"
+    "ask": "node src/ask.js",
+    "serve": "node src/server.js"
   },
   "keywords": [
     "gemini",
@@ -16,6 +17,7 @@
   "license": "MIT",
   "dependencies": {
     "@google/genai": "^2.31.0",
-    "dotenv": "^18.0.9"
+    "dotenv": "^18.0.9",
+    "express": "4.21.2"
   }
 }

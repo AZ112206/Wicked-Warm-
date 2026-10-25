@@ -12,22 +12,16 @@
  *   return await res.json();
  */
 async function fetchPriceSeries(metric, months) {
-  await new Promise((r) => setTimeout(r, 200));
-
-  // Base monthly values per metric (12 months).
-  const base = {
-    electricity: [14.8, 15.1, 15.0, 15.4, 16.2, 16.9, 17.5, 17.1, 16.7, 16.4, 16.9, 17.8],
-    gas: [1.12, 1.08, 1.05, 1.02, 1.0, 1.04, 1.15, 1.22, 1.3, 1.28, 1.35, 1.42],
-  };
-  const labels = ["Nov", "Dec", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct"];
-
-  const values = base[metric] || base.electricity;
-  const start = values.length - months;
-  return {
-    metric,
-    unit: metric === "gas" ? "$/therm" : "¢/kWh",
-    points: values.slice(start).map((value, i) => ({ label: labels[start + i], value })),
-  };
+  // Calls the Node_Server, which proxies to the Python_Service price synthesis.
+  // Response shape: {metric, unit, points:[{label, value}]}.
+  const res = await fetch(
+    `/api/prices?metric=${encodeURIComponent(metric)}&months=${encodeURIComponent(months)}`
+  );
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    throw new Error(body.error || "Prices unavailable");
+  }
+  return await res.json();
 }
 
 /**
@@ -36,13 +30,14 @@ async function fetchPriceSeries(metric, months) {
  *   return await res.json();
  */
 async function fetchRegionalPrices() {
-  await new Promise((r) => setTimeout(r, 150));
-  return [
-    { region: "Northeast", rate: 19.4, change: 3.2 },
-    { region: "Midwest", rate: 15.1, change: -1.1 },
-    { region: "South", rate: 13.8, change: 0.6 },
-    { region: "West", rate: 21.7, change: 4.0 },
-  ];
+  // Calls the Node_Server, which proxies to the Python_Service regions synthesis.
+  // Response shape: [{region, rate, change}].
+  const res = await fetch("/api/prices/regions");
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    throw new Error(body.error || "Regions unavailable");
+  }
+  return await res.json();
 }
 
 // ---------------------------------------------------------------------------
